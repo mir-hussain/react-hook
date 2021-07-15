@@ -3,32 +3,27 @@ import { useState } from "react";
 const useInput = () => {
   const [error, setError] = useState({});
   const [userInput, setUserInput] = useState({});
-  console.log(error);
   console.log(userInput);
 
   const updateErrorByEvent = (event, status) => {
-    const currentError = { ...error };
-    currentError[event.target.name] = status;
-    setError(currentError);
+    setError((currentError) => ({
+      ...currentError,
+      [event.target.name]: status,
+    }));
   };
 
   const updateErrorManually = (name, warningText) => {
-    const currentError = { ...error };
-    currentError[name] = `${warningText}`;
-    setError(currentError);
+    setError((currentError) => ({
+      ...currentError,
+      [name]: warningText,
+    }));
   };
 
   const updateUserInput = (name, value) => {
-    const currentUserInput = { ...userInput };
-    currentUserInput[name] = value;
-    setUserInput(currentUserInput);
-  };
-
-  const getInput = (event) => {
-    const inputName = event.target.name;
-    const inputValue = event.target.value;
-    updateUserInput(inputName, inputValue);
-    // updateErrorByEvent(event, false);
+    setUserInput((currentUserInput) => ({
+      ...currentUserInput,
+      [name]: value,
+    }));
   };
 
   const handleInvalid = (event) => {
@@ -39,16 +34,32 @@ const useInput = () => {
     );
   };
 
-  const checkName = (name) => {
-    if (name <= 3) {
-      updateErrorManually(
-        "name",
-        "Name can't be less than 3 character"
-      );
+  const getInput = (event) => {
+    const inputName = event.target.name;
+    const inputValue = event.target.value;
+    updateErrorByEvent(event, false);
+    if (inputName === "name") {
+      if (/([0-9])/.test(inputValue)) {
+        setUserInput({});
+        updateErrorManually(
+          "name",
+          "Name can't have numbers in it"
+        );
+      } else {
+        updateErrorManually("name", false);
+        if (inputValue.length < 4) {
+          setUserInput({});
+          updateErrorManually(
+            "name",
+            "Name can't be less than 4 character"
+          );
+        } else {
+          updateUserInput(inputName, inputValue);
+          updateErrorManually("name", false);
+        }
+      }
     }
   };
-
-  checkName(userInput?.name);
 
   return { getInput, handleInvalid, error };
 };

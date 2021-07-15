@@ -3,6 +3,7 @@ import useInput from "../hooks/useInput";
 
 const Login = () => {
   const { getInput, handleInvalid, error } = useInput();
+  console.log(error);
 
   const handleSubmit = (event) => {
     event.preventDefault();
