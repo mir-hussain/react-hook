@@ -11,6 +11,18 @@ const Login = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <div>
+          <label htmlFor='name'>Name: </label>
+          <input
+            type='text'
+            name='name'
+            id='name'
+            onInput={getInput}
+            onInvalid={handleInvalid}
+            required
+          />
+          {error?.email && <p>{error?.name}</p>}
+        </div>
+        <div>
           <label htmlFor='email'>Email: </label>
           <input
             type='email'
