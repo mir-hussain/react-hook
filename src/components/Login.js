@@ -13,26 +13,26 @@ const Login = () => {
         <div>
           <label htmlFor='email'>Email: </label>
           <input
-            onBlur={getInput}
-            onInvalid={handleInvalid}
             type='email'
             name='email'
             id='email'
+            onInput={getInput}
+            onInvalid={handleInvalid}
             required
           />
-          {error?.email && <p>Email is required</p>}
+          {error?.email && <p>{error?.email}</p>}
         </div>
         <div>
           <label htmlFor='password'>Password: </label>
           <input
-            onBlur={getInput}
             type='password'
             name='password'
             id='password'
+            onInput={getInput}
             onInvalid={handleInvalid}
             required
           />
-          {error?.password && <p>Password is required</p>}
+          {error?.password && <p>{error?.password}</p>}
         </div>
         <button type='submit'>Submit</button>
       </form>
