@@ -34,30 +34,48 @@ const useInput = () => {
     );
   };
 
-  const getInput = (event) => {
-    const inputName = event.target.name;
-    const inputValue = event.target.value;
-    updateErrorByEvent(event, false);
-    if (inputName === "name") {
-      if (/([0-9])/.test(inputValue)) {
+  const nameValidation = (username) => {
+    if (/([0-9])/.test(username)) {
+      setUserInput({});
+      updateErrorManually(
+        "name",
+        "Name can't have numbers in it"
+      );
+    } else {
+      updateErrorManually("name", false);
+      if (username.length < 4) {
         setUserInput({});
         updateErrorManually(
           "name",
-          "Name can't have numbers in it"
+          "Name can't be less than 4 character"
         );
       } else {
+        updateUserInput("name", username);
         updateErrorManually("name", false);
-        if (inputValue.length < 4) {
-          setUserInput({});
-          updateErrorManually(
-            "name",
-            "Name can't be less than 4 character"
-          );
-        } else {
-          updateUserInput(inputName, inputValue);
-          updateErrorManually("name", false);
-        }
       }
+    }
+  };
+
+  const emailValidation = (email) => {
+    console.log(email);
+  };
+
+  const passwordValidation = (password) => {
+    console.log(password);
+  };
+
+  const getInput = (event) => {
+    const inputName = event.target.name;
+    const inputValue = event.target.value;
+
+    updateErrorByEvent(event, false);
+
+    if (inputName === "name") {
+      nameValidation(inputValue);
+    } else if (inputName === "email") {
+      emailValidation(inputValue);
+    } else if (inputName === "password") {
+      passwordValidation(inputValue);
     }
   };
 
