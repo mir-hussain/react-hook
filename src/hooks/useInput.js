@@ -3,7 +3,6 @@ import { useState } from "react";
 const useInput = () => {
   const [error, setError] = useState({});
   const [userInput, setUserInput] = useState({});
-  console.log(userInput);
 
   const updateErrorByEvent = (event, status) => {
     setError((currentError) => ({
@@ -57,7 +56,17 @@ const useInput = () => {
   };
 
   const emailValidation = (email) => {
-    console.log(email);
+    if (email.length === 0) {
+      updateErrorManually("email", "email can't be empty");
+    } else {
+      if (!email.includes("@") || !email.includes(".com")) {
+        setUserInput({});
+        updateErrorManually("email", "Invalid email");
+      } else {
+        updateErrorManually("email", false);
+        setUserInput("email", email);
+      }
+    }
   };
 
   const passwordValidation = (password) => {
@@ -79,7 +88,7 @@ const useInput = () => {
     }
   };
 
-  return { getInput, handleInvalid, error };
+  return { getInput, handleInvalid, error, userInput };
 };
 
 export default useInput;

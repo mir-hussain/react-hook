@@ -3,7 +3,6 @@ import useInput from "../hooks/useInput";
 
 const Login = () => {
   const { getInput, handleInvalid, error } = useInput();
-  console.log(error);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -17,11 +16,11 @@ const Login = () => {
             type='text'
             name='name'
             id='name'
-            onInput={getInput}
+            onBlur={getInput}
             onInvalid={handleInvalid}
             required
           />
-          {error?.email && <p>{error?.name}</p>}
+          {error?.name && <p>{error?.name}</p>}
         </div>
         <div>
           <label htmlFor='email'>Email: </label>
@@ -29,7 +28,7 @@ const Login = () => {
             type='email'
             name='email'
             id='email'
-            onInput={getInput}
+            onBlur={getInput}
             onInvalid={handleInvalid}
             required
           />
