@@ -42,7 +42,7 @@ const useInput = () => {
         "Name can't have numbers in it"
       );
     } else {
-      updateErrorManually("name", false);
+      setError({});
       if (username.length < 4) {
         updateUserInput("name", "");
         updateErrorManually(
@@ -50,8 +50,8 @@ const useInput = () => {
           "Name can't be less than 4 character"
         );
       } else {
+        setError({});
         updateUserInput("name", username);
-        updateErrorManually("name", false);
       }
     }
   };
@@ -65,7 +65,7 @@ const useInput = () => {
         updateUserInput("email", "");
         updateErrorManually("email", "Invalid email");
       } else {
-        updateErrorManually("email", false);
+        setError({});
         updateUserInput("email", email);
       }
     }
@@ -79,7 +79,7 @@ const useInput = () => {
         "Password must be 8 character or longer."
       );
     } else {
-      updateErrorManually("password", false);
+      setError({});
       updateUserInput("password", password);
     }
   };
@@ -88,7 +88,7 @@ const useInput = () => {
     const inputName = event.target.name;
     const inputValue = event.target.value;
 
-    updateErrorByEvent(event, false);
+    // updateErrorByEvent(event, false);
 
     if (inputName === "name") {
       nameValidation(inputValue);
