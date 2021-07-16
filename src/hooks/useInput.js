@@ -3,6 +3,7 @@ import { useState } from "react";
 const useInput = () => {
   const [error, setError] = useState({});
   const [userInput, setUserInput] = useState({});
+  console.log(userInput);
 
   const updateErrorByEvent = (event, status) => {
     setError((currentError) => ({
@@ -35,7 +36,7 @@ const useInput = () => {
 
   const nameValidation = (username) => {
     if (/([0-9])/.test(username)) {
-      setUserInput({});
+      updateUserInput("name", "");
       updateErrorManually(
         "name",
         "Name can't have numbers in it"
@@ -43,7 +44,7 @@ const useInput = () => {
     } else {
       updateErrorManually("name", false);
       if (username.length < 4) {
-        setUserInput({});
+        updateUserInput("name", "");
         updateErrorManually(
           "name",
           "Name can't be less than 4 character"
@@ -57,20 +58,30 @@ const useInput = () => {
 
   const emailValidation = (email) => {
     if (email.length === 0) {
+      updateUserInput("email", "");
       updateErrorManually("email", "email can't be empty");
     } else {
       if (!email.includes("@") || !email.includes(".com")) {
-        setUserInput({});
+        updateUserInput("email", "");
         updateErrorManually("email", "Invalid email");
       } else {
         updateErrorManually("email", false);
-        setUserInput("email", email);
+        updateUserInput("email", email);
       }
     }
   };
 
   const passwordValidation = (password) => {
-    console.log(password);
+    if (password.length < 8) {
+      updateUserInput("password", "");
+      updateErrorManually(
+        "password",
+        "Password must be 8 character or longer."
+      );
+    } else {
+      updateErrorManually("password", false);
+      updateUserInput("password", password);
+    }
   };
 
   const getInput = (event) => {

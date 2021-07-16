@@ -2,10 +2,15 @@ import React from "react";
 import useInput from "../hooks/useInput";
 
 const Login = () => {
-  const { getInput, handleInvalid, error } = useInput();
+  const { getInput, handleInvalid, error, userInput } =
+    useInput();
+
+  console.log(error);
+  console.log(Object.keys(error).length);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(userInput);
   };
   return (
     <div>
@@ -46,7 +51,16 @@ const Login = () => {
           />
           {error?.password && <p>{error?.password}</p>}
         </div>
-        <button type='submit'>Submit</button>
+        <div>
+          {Object.keys(error).length === 0 && (
+            <button type='submit'>Submit</button>
+          )}
+          {!Object.keys(error).length === 0 && (
+            <button disabled type='submit'>
+              Submit
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );
